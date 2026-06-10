@@ -1,0 +1,33 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+app/local_llm_config.py
+app/local_llm_config.py.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime database and generated data
+data/
+data/*.sqlite3
+data/*.sqlite3-*
+data/*.db
+data/docx_render/
+
+# Generated documents
+AI_Agent_Interview_QA_Chip_Selector.docx
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

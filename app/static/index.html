@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chip Selector Agent</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">CSA</div>
+          <div>
+            <h1>器件选型系统</h1>
+            <p id="modelName">模型状态检测中</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <button id="navAgent" class="active">Agent 工作台</button>
+          <button id="navLibrary">芯片库管理</button>
+        </nav>
+        <section class="panel compact">
+          <div class="section-title">
+            <h2>项目</h2>
+            <button id="refreshProjects" title="刷新">↻</button>
+          </div>
+          <div id="projectList" class="project-list"></div>
+        </section>
+        <section class="panel compact">
+          <h2>新建项目</h2>
+          <input id="projectName" placeholder="项目名，例如 三音频谱测试板" />
+          <textarea id="projectDescription" placeholder="项目背景、偏好、约束"></textarea>
+          <button id="createProject">新建项目</button>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section id="agentPage" class="page active">
+          <section class="agent-minimal">
+            <div class="agent-title">
+              <h2 id="activeProjectName">项目</h2>
+              <span id="workflowBadge">等待输入</span>
+            </div>
+            <div class="agent-body">
+              <div id="chatMessages" class="chat-messages"></div>
+              <aside class="side-hints">
+                <div class="section-title">
+                  <h2>方案器件</h2>
+                  <span id="hintCount">0</span>
+                </div>
+                <div id="partHints" class="part-hints"></div>
+              </aside>
+            </div>
+            <div class="chat-input-row minimal">
+              <textarea id="messageInput" placeholder="描述目标，或继续补充工程约束"></textarea>
+              <button id="sendDiscuss">发送</button>
+              <button id="usePlan" disabled>使用该方案</button>
+            </div>
+          </section>
+        </section>
+
+        <section id="libraryPage" class="page">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Component Library</p>
+              <h2>芯片库管理</h2>
+              <p>维护芯片参数、数据手册知识、库存数量和预占/出库记录。</p>
+            </div>
+          </header>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>数据手册导入</h2>
+              <span id="knowledgeCount">0 份文档</span>
+            </div>
+            <input id="datasheetFile" type="file" accept="application/pdf" />
+            <select id="datasheetPart"></select>
+            <div class="actions">
+              <button id="uploadDatasheet">分析数据手册</button>
+              <button id="commitDatasheet" disabled>新增芯片知识</button>
+              <button id="refreshKnowledge" class="secondary">刷新</button>
+            </div>
+            <div id="datasheetImportStatus" class="empty-state">未导入。</div>
+            <div id="datasheetPreview" class="selection-card hidden"></div>
+            <div id="knowledgeDocs" class="list-stack"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>芯片库存</h2>
+              <button id="refreshInventory" title="刷新">↻</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>型号</th>
+                    <th>类别</th>
+                    <th>参数</th>
+                    <th>库位</th>
+                    <th>库存</th>
+                    <th>补货</th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>预占与出库</h2>
+              <button id="refreshReservations" title="刷新">↻</button>
+            </div>
+            <div id="reservationList" class="list-stack"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div id="confirmModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="section-title">
+          <h2>最终确认选型</h2>
+          <button id="closeModal" class="secondary">×</button>
+        </div>
+        <div id="modalSelection"></div>
+        <div class="actions">
+          <button id="finalConfirm">确认采用并同步数据库</button>
+        </div>
+      </div>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
